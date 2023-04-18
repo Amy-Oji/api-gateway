@@ -1,0 +1,33 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
+
+server:
+  port: 8085
+
+spring:
+  main:
+    web-application-type: reactive
+
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+
+        - id: user-service
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/api/v1/auth/**, /api/v1/users/**
+
+        - id: account-service
+          uri: lb://ACCOUNT-SERVICE
+          predicates:
+            - Path=/api/v1/accounts/**
+
+        - id: transaction-service
+          uri: lb://TRANSACTIONS-SERVICE
+          predicates:
+            - Path=/transaction/**
+
