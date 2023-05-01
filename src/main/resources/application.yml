@@ -12,10 +12,10 @@ spring:
 
   application:
     name: api-gateway
+
   cloud:
     gateway:
       routes:
-
         - id: user-service
           uri: lb://USER-SERVICE
           predicates:
@@ -36,4 +36,17 @@ spring:
             - Path=/transaction/**
           filters:
             - AuthenticationFilter
-
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: http://localhost:8085
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+            allowedHeaders:
+              - Authorization
+              - Content-Type
+            allowCredentials: true
